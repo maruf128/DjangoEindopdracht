@@ -1,0 +1,74 @@
+/* menu.css */
+
+.MenuBar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #223d25;
+    /* Dark green */
+    color: #fff;
+    /* White text */
+    padding: 10px;
+    /* Adjust padding as needed */
+}
+
+.special {
+    width: 50px;
+    /* Adjust the width as needed */
+    height: 50px;
+    /* Adjust the height as needed */
+    /* Add any other styles for the special class */
+}
+
+#logo {
+    /* Add any styles for the logo ID */
+}
+
+#special {
+    color: #32a852;
+    /* Light green */
+    /* Add any other styles for the special ID */
+}
+
+/* Add styles for other elements as needed */
+
+/* Example: Change the color of links */
+.MenuBar a {
+    color: #fff;
+    /* White */
+    display: block;
+    /* Display as block elements */
+    margin-left: 10px;
+    /* Adjust margin as needed */
+}
+
+/* Example: Change the color of visited links */
+.MenuBar a:visited {
+    color: #b5d6b2;
+    /* Light green */
+}
+
+/* Example: Change the color of links on hover */
+.MenuBar a:hover {
+    color: #32a852;
+    /* Light green */
+}
+
+/* content.css */
+
+.content {
+    display: flex;
+    align-items: center;
+}
+
+.picture {
+    flex: 1;
+    margin-right: 20px;
+    /* Adjust margin as needed */
+}
+
+.bio {
+    flex: 2;
+}
+
+/* Add any other styles for the picture and bio as needed */
