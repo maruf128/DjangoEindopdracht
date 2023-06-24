@@ -93,9 +93,99 @@
     flex: 2;
 }
 
-/* Add any other styles for the picture and bio as needed */
+/* user gegevens */
+.user-info {
+    margin-top: 10px;
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
 
-/* css voor a href om terug te gaan */
-#terug {
+.user-info strong {
+    font-weight: bold;
+    color: #333;
+}
+
+.user-info a {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: #fff;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
     text-decoration: none;
+    margin-top: 10px;
+}
+
+.user-info a:hover {
+    background-color: #45a049;
+}
+
+/* Form styles */
+form {
+    margin-top: 10px;
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+form p {
+    margin-bottom: 20px;
+}
+
+form label {
+    display: block;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+form input[type="text"],
+form input[type="password"] {
+    width: 99%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 5px;
+}
+
+form .helptext,
+li {
+    color: #999;
+    font-size: 12px;
+}
+
+form input[type="submit"] {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: #fff;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+form input[type="submit"]:hover {
+    background-color: #45a049;
+}
+
+/* login css */
+h1 {
+    text-align: center;
+}
+
+/* css voor messages */
+.messages {
+    margin: 0 auto;
+    width: 400px;
+    height: 50px;
+    background-color: rgb(29, 151, 118);
+    display: flex;
+    justify-content: center;
 }

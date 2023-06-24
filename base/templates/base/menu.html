@@ -1,7 +1,9 @@
 <div class="MenuBar">
-    <a><img class="special" id="logo" src="../static/base/images/logo.jpg"></a>
+  {% load static %}  <!-- Add this line -->
+  <img class="special" id="logo" src="{% static 'base/images/logo.jpg' %}">
     {% if user.is_authenticated %}
-    {% comment %} <a href="#">Home</a>  {% endcomment %}
+    <a href="{% url 'index' %}">Home</a>
+    <a href="{% url 'user' %}">Eigen gegevens</a>
     <a href="{% url 'logout'%}">logout</a>
       {% if user.is_staff %}
       {% comment %} speciale pages voor admin {% endcomment %}

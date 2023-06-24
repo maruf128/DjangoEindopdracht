@@ -1,9 +1,11 @@
-# from django import forms
-# from .models import Distance, Time
+from django import forms
+from .models import Profile
 
-# class NameForm(forms.Form):
-#     your_name = forms.CharField(label="Your name", max_length=100)
-#     your_surname = forms.CharField(label="Your surname", max_length=100)
+
+class ProfileForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ['bio', 'city', 'date_of_birth']
 
 
 # class DistanceForm(forms.ModelForm):
