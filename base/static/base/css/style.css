@@ -34,12 +34,12 @@
 
 /* Example: Change the color of links */
 .MenuBar a {
+    font-size: 1.5em;
     color: #fff;
     /* White */
     display: block;
     /* Display as block elements */
-    margin-left: 10px;
-    /* Adjust margin as needed */
+    text-decoration: none;
 }
 
 /* Example: Change the color of visited links */
@@ -54,21 +54,48 @@
     /* Light green */
 }
 
-/* content.css */
+/* Add individual margins to each <a> tag */
+.MenuBar a:nth-child(1) {
+    margin-right: 10px;
+}
 
-.content {
+.MenuBar a:nth-child(2) {
+    margin-right: 10px;
+}
+
+/* Add margins to other <a> tags as needed */
+
+/* static.css */
+
+
+
+.container {
     display: flex;
+    justify-content: flex-end;
+    /* Align content to the right side */
     align-items: center;
+    width: 100%;
+    /* Adjust width as needed */
 }
 
-.picture {
+.container .picture {
     flex: 1;
-    margin-right: 20px;
-    /* Adjust margin as needed */
 }
 
-.bio {
+.container .picture img {
+    max-width: 800px;
+    /* Adjust image size as needed */
+    display: block;
+    /* Remove any extra spacing */
+}
+
+.container .bio {
     flex: 2;
 }
 
 /* Add any other styles for the picture and bio as needed */
+
+/* css voor a href om terug te gaan */
+#terug {
+    text-decoration: none;
+}
