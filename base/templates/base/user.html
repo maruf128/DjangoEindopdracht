@@ -1,0 +1,15 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+    <h1>Welkom {{naam}}</h1>
+    <div class="user-info">
+        {% for data in gegevens %}
+            <strong>User: </strong> {{ data.user }}<br>
+            <strong>Bio: </strong> {{ data.bio }}<br>
+            <strong>Stad: </strong> {{ data.city }}<br>
+            <strong>Geboorte datum: </strong> {{ data.date_of_birth }}<br>
+            <br>
+            <a href="{% url 'edit_user' pk=data.id %}">aanpassen</a>
+        {% endfor %}
+    </div>
+{% endblock content %}
