@@ -1,18 +1,16 @@
 <div class="MenuBar">
-    <img class="special" id="logo" src="../static/base/images/logo.jpg">
+    <a><img class="special" id="logo" src="../static/base/images/logo.jpg"></a>
     {% if user.is_authenticated %}
     {% comment %} <a href="#">Home</a>  {% endcomment %}
     <a href="{% url 'logout'%}">logout</a>
-    <a href="{% url 'langlauf'%}">alle medailes</a>
-    {% comment %} <a href="{% url 'medal' color='Gold'%}">Dit zijn de winaars!</a>  {% endcomment %}
-    <a href="{% url 'distances'%}">Dit zijn de afstanden</a>
-    <a href="{% url 'eigentijd'%}">Dit zijn jouw afstanden</a>
-    <a href="{% url 'snelstetijd'%}">Dit zijn de snelste tijden</a>
       {% if user.is_staff %}
-        <a href="{% url 'unapproved_times'%}">Accepteer de tijden</a>
+      {% comment %} speciale pages voor admin {% endcomment %}
       {% endif %}
     {% else %}
-    {% comment %} <a href="{% url 'register'%}">registreer</a> {% endcomment %}
+    {% if request.path == '/login/' or request.path == '/register/' %}
+    <a href="{% url 'index' %}">Terug gaan</a>
+    {% endif %}
+    <a href="{% url 'register'%}">registreer</a>
     <a href="{% url 'login'%}">login</a>
     {% endif %}
   </div><!-- MenuBar eindigt hier -->
