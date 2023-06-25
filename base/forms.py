@@ -1,5 +1,5 @@
 from django import forms
-from .models import Profile
+from .models import Profile, Collection, Medicine
 
 
 class ProfileForm(forms.ModelForm):
@@ -8,9 +8,13 @@ class ProfileForm(forms.ModelForm):
         fields = ['bio', 'city', 'date_of_birth']
 
 
-# class DistanceForm(forms.ModelForm):
-#     class Meta:
-#         model = Distance
-#         fields = ("length", "full_name")
+class CollectionForm(forms.ModelForm):
+    class Meta:
+        model = Collection
+        fields = ['medicine', 'user', 'date']
 
-# voorbeelden ^^
+
+class MedicineForm(forms.ModelForm):
+    class Meta:
+        model = Medicine
+        fields = ['name', 'manufacturer', 'cures', 'sideeffects']
