@@ -16,13 +16,13 @@ class Profile(models.Model):
 
 
 class Medicine(models.Model):
-    name = models.TextField()
-    manufacturer = models.TextField()
+    name = models.CharField(max_length=255)
+    manufacturer = models.CharField(max_length=255)
     cures = models.TextField()
     sideeffects = models.TextField()
 
     def __str__(self):
-        return f"{self.name} cured {self.cures()}"
+        return f"{self.name} verhelpt {self.cures}"
 
 
 class Collection(models.Model):
@@ -33,7 +33,8 @@ class Collection(models.Model):
     collected = models.BooleanField(default=False)
     collectedapproved = models.BooleanField(default=False)
     collectedapprovedby = models.ForeignKey(User, on_delete=models.CASCADE,
-                                    related_name='approved_by', null=True, blank=True)     
+                                            related_name='approved_by',
+                                            null=True, blank=True)
 
 
 @receiver(post_save, sender=User)
