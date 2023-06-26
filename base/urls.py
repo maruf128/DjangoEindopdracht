@@ -46,6 +46,8 @@ urlpatterns = [
         name="admin_approve",
     ),
     path("password_check/", views.password_check, name="password_check"),
+    path("medicijn_gegevens/<str:name>/",
+         views.medicijn_gegevens, name="medicijn_gegevens"),
     # path(
     #     "collections/<int:collection_id>/mark_delivered/",
     #     views.mark_delivered,

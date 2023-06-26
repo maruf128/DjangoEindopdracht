@@ -1,3 +1,4 @@
+from .forms import CollectionDetailForm
 from django.shortcuts import render
 from .models import Profile, Medicine, User, Collection
 from .forms import (
@@ -18,6 +19,8 @@ from django.shortcuts import render, get_object_or_404
 from django.contrib.auth import authenticate
 
 # Create your views here.
+
+
 def index(request):
     return render(request, "base/index.html")
 
@@ -52,7 +55,8 @@ def password_check(request):
         form = PasswordCheckForm(request.POST)
         if form.is_valid():
             password = form.cleaned_data.get("password")
-            user = authenticate(username=request.user.username, password=password)
+            user = authenticate(
+                username=request.user.username, password=password)
             if user is not None and user == request.user:
                 return redirect("edit_user", pk=request.user.pk)
             else:
@@ -84,7 +88,8 @@ def edit_user(request, pk):
 
 @login_required
 def collection_list(request):
-    collections = Collection.objects.filter(user=request.user, collectedapproved=False)
+    collections = Collection.objects.filter(
+        user=request.user, collectedapproved=False)
 
     context = {"collections": collections}
     return render(request, "base/collection_list.html", context)
@@ -130,9 +135,6 @@ def medicines(request):
     return render(request, "base/medicines.html", context)
 
 
-from django.contrib import messages
-
-
 @staff_member_required
 def admin_edit_medicine(request, pk):
     medicine = Medicine.objects.get(pk=pk)
@@ -146,7 +148,8 @@ def admin_edit_medicine(request, pk):
     else:
         form = MedicineForm(instance=medicine)
 
-    context = {"form": form, "medicine": medicine}  # Add 'medicine' to the context
+    # Add 'medicine' to the context
+    context = {"form": form, "medicine": medicine}
     return render(request, "base/admin_edit_medicine.html", context)
 
 
@@ -190,12 +193,10 @@ def nieuwe_medicijn(request):
     return render(request, "base/medicijnform.html", context)
 
 
-from .forms import CollectionDetailForm
-
-
 @login_required
 def collection_detail(request, collection_id):
-    collection = get_object_or_404(Collection, id=collection_id, user=request.user)
+    collection = get_object_or_404(
+        Collection, id=collection_id, user=request.user)
 
     if request.method == "POST":
         form = CollectionDetailForm(request.POST, instance=collection)
@@ -210,3 +211,14 @@ def collection_detail(request, collection_id):
         "form": form,
     }
     return render(request, "base/collection_detail.html", context)
+
+
+@login_required
+def medicijn_gegevens(request, name):
+    ingelogde = request.user
+    gegevens = Medicine.objects.filter(name=name)
+    collection_count = Collection.objects.filter(
+        user=ingelogde, medicine__name=name, collected=True).count()
+    context = {"gegevens": gegevens, "naam": ingelogde,
+               "collection_count": collection_count}
+    return render(request, "base/medicijn_detail.html", context)

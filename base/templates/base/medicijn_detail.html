@@ -1,0 +1,14 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+<div class="user-info">
+    {% for data in gegevens %}
+    <strong>Naam: </strong> {{ data.name }}<br>
+    <strong>Manufacturer: </strong> {{ data.manufacturer }}<br>
+    <strong>Cures: </strong> {{ data.cures }}<br>
+    <strong>Sideeffects: </strong> {{ data.sideeffects }}<br>
+    <strong>hoe vaak het gebruikt is: </strong> {{ collection_count }} times<br>
+    <br>
+    {% endfor %}
+</div>
+{% endblock content %}
