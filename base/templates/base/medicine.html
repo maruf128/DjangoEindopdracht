@@ -1,0 +1,10 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+<h1>Medicijn opties</h1>
+<div class="link-container">
+    <a class="link" href="{% url 'medicines' %}">Medicijnen</a>
+    <a class="link" href="{% url 'nieuwe_medicijn'%}">+ Medicijn</a>
+    <a class="link" href="{% url 'nieuwe_afhaal'%}">+ Afhaal</a>
+  </div>
+{% endblock content %}

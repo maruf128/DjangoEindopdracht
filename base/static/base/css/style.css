@@ -20,6 +20,27 @@
     /* Add any other styles for the special class */
 }
 
+.link-container {
+    text-align: center;
+}
+
+.link {
+    display: inline-block;
+    margin: 10px;
+    font-weight: bold;
+    text-decoration: none;
+    color: #333;
+    padding: 5px;
+    margin-top: 50px;
+    border-radius: 5px;
+    background-color: #f2f2f2;
+}
+
+.link:hover {
+    background-color: #e0e0e0;
+}
+
+
 .collection-details {
     text-align: center;
     margin-bottom: 20px;

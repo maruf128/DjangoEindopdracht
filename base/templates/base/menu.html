@@ -8,9 +8,9 @@
     {% if user.is_staff %}
     {% comment %} speciale pages voor admin {% endcomment %}
     <a href="{% url 'admin_collection_list' %}">Unapproved collections</a>
-    <a href="{% url 'medicines' %}">Medicijnen</a>
-    <a href="{% url 'nieuwe_afhaal'%}">+ Afhaal</a>
-    <a href="{% url 'nieuwe_medicijn'%}">+ Medicijn</a>
+    <a href="{% url 'medicine' %}">Medicijn opties</a>
+    {% comment %} <a href="{% url 'nieuwe_afhaal'%}">+ Afhaal</a> {% endcomment %}
+    {% comment %} <a href="{% url 'nieuwe_medicijn'%}">+ Medicijn</a> {% endcomment %}
     {% endif %}
     <a href="{% url 'logout'%}">Logout</a>
     {% else %}

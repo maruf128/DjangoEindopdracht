@@ -99,6 +99,11 @@ def admin_collection_list(request):
 
 
 @staff_member_required
+def medicine(request):
+    return render(request, "base/medicine.html")
+
+
+@staff_member_required
 def admin_approve(request, collection_id):
     collection = get_object_or_404(Collection, id=collection_id)
 

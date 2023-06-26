@@ -24,6 +24,11 @@ urlpatterns = [
         views.medicines,
         name="medicines",
     ),
+    path(
+        "medicine/",
+        views.medicine,
+        name="medicine",
+    ),
     path("collections/", views.collection_list, name="collection_list"),
     path(
         "collections/<int:collection_id>/",
