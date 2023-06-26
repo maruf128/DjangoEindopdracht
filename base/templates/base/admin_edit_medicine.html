@@ -4,8 +4,12 @@
     <h1>Pas aan</h1>
     <form method="POST">
         {% csrf_token %}
-        {{ form.as_p}}
-    <p><span class="help-text">Vul de datum in deze format in: YYYY-MM-DD.</span></p>
-        <input type="submit" value="submit">
+        {{ form.as_p }}
+        <input type="submit" value="Submit">
     </form>
-{% endblock content %}
+
+    <form method="POST" action="{% url 'admin_delete_medicine' medicine.id %}">
+        {% csrf_token %}
+        <input type="submit" value="Delete Medicine">
+    </form>
+{% endblock %}

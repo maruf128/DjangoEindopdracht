@@ -15,6 +15,11 @@ urlpatterns = [
         name="admin_edit_medicine",
     ),
     path(
+        "admin_delete_medicine/<int:pk>/",
+        views.admin_delete_medicine,
+        name="admin_delete_medicine",
+    ),
+    path(
         "medicines/",
         views.medicines,
         name="medicines",

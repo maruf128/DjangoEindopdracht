@@ -6,6 +6,7 @@ from .forms import (
     MedicineForm,
     AdminApproveForm,
     PasswordCheckForm,
+    MedicineEditForm,
 )
 from django.shortcuts import redirect
 from django.contrib import messages
@@ -124,6 +125,9 @@ def medicines(request):
     return render(request, "base/medicines.html", context)
 
 
+from django.contrib import messages
+
+
 @staff_member_required
 def admin_edit_medicine(request, pk):
     medicine = Medicine.objects.get(pk=pk)
@@ -137,8 +141,16 @@ def admin_edit_medicine(request, pk):
     else:
         form = MedicineForm(instance=medicine)
 
-    context = {"form": form}
+    context = {"form": form, "medicine": medicine}  # Add 'medicine' to the context
     return render(request, "base/admin_edit_medicine.html", context)
+
+
+@staff_member_required
+def admin_delete_medicine(request, pk):
+    medicine = Medicine.objects.get(pk=pk)
+    medicine.delete()
+    messages.success(request, "Medicine deleted successfully.")
+    return redirect("user")
 
 
 @staff_member_required

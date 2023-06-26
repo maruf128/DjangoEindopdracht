@@ -33,6 +33,12 @@ class MedicineForm(forms.ModelForm):
         fields = ["name", "manufacturer", "cures", "sideeffects"]
 
 
+class MedicineEditForm(forms.ModelForm):
+    class Meta:
+        model = Medicine
+        fields = ["name", "manufacturer", "cures", "sideeffects"]
+
+
 class CollectionDetailForm(forms.ModelForm):
     class Meta:
         model = Collection
