@@ -16,6 +16,7 @@ class ProfileForm(UserChangeForm):
         if password:
             profile.user.set_password(password)
         if commit:
+            profile.user.save()
             profile.save()
         return profile
 
