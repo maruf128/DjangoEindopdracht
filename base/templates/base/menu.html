@@ -4,8 +4,10 @@
     {% if user.is_authenticated %}
     <a href="{% url 'index' %}">Home</a>
     <a href="{% url 'user' %}">Eigen gegevens</a>
+    <a href="{% url 'collection_list' %}">Mijn medicijnen</a>
     {% if user.is_staff %}
     {% comment %} speciale pages voor admin {% endcomment %}
+    <a href="{% url 'admin_collection_list' %}">Unapproved collections</a>
     <a href="{% url 'nieuwe_afhaal'%}">+ Afhaal</a>
     <a href="{% url 'nieuwe_medicijn'%}">+ Medicijn</a>
     {% endif %}

@@ -1,0 +1,14 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+  <h1>Unapproved Collections</h1>
+  {% if collections %}
+    <ul>
+      {% for collection in collections %}
+        <li><a href="{% url 'admin_approve' collection.id %}">{{collection.date}}</a></li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>There are no unapproved collections.</p>
+  {% endif %}
+{% endblock %}

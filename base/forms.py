@@ -30,3 +30,15 @@ class MedicineForm(forms.ModelForm):
     class Meta:
         model = Medicine
         fields = ["name", "manufacturer", "cures", "sideeffects"]
+
+
+class CollectionDetailForm(forms.ModelForm):
+    class Meta:
+        model = Collection
+        fields = ["collected"]
+
+
+class AdminApproveForm(forms.ModelForm):
+    class Meta:
+        model = Collection
+        fields = ["collectedapproved"]
