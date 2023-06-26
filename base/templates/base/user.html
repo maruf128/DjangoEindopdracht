@@ -10,7 +10,7 @@
             <strong>Geboorte datum: </strong> {{ data.date_of_birth }}<br>
             <strong>Password: *****</strong><br>
             <br>
-            <a href="{% url 'edit_user' pk=data.id %}">aanpassen</a>
+            <a href="{% url 'password_check'%}">aanpassen</a>
         {% endfor %}
     </div>
 {% endblock content %}

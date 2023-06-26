@@ -1,6 +1,12 @@
 from django.shortcuts import render
 from .models import Profile, Medicine, User, Collection
-from .forms import ProfileForm, CollectionForm, MedicineForm, AdminApproveForm
+from .forms import (
+    ProfileForm,
+    CollectionForm,
+    MedicineForm,
+    AdminApproveForm,
+    PasswordCheckForm,
+)
 from django.shortcuts import redirect
 from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm
@@ -8,6 +14,7 @@ from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
 from django.shortcuts import render, get_object_or_404
+from django.contrib.auth import authenticate
 
 # Create your views here.
 def index(request):
@@ -36,6 +43,24 @@ def user(request):
     gegevens = Profile.objects.filter(user=ingelogde)
     context = {"gegevens": gegevens, "naam": ingelogde}
     return render(request, "base/user.html", context)
+
+
+@login_required
+def password_check(request):
+    if request.method == "POST":
+        form = PasswordCheckForm(request.POST)
+        if form.is_valid():
+            password = form.cleaned_data.get("password")
+            user = authenticate(username=request.user.username, password=password)
+            if user is not None and user == request.user:
+                return redirect("edit_user", pk=request.user.pk)
+            else:
+                form.add_error("password", "Invalid password")
+    else:
+        form = PasswordCheckForm()
+
+    context = {"form": form}
+    return render(request, "base/password_check.html", context)
 
 
 @login_required

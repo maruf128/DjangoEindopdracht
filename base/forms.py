@@ -42,3 +42,7 @@ class AdminApproveForm(forms.ModelForm):
     class Meta:
         model = Collection
         fields = ["collectedapproved"]
+
+
+class PasswordCheckForm(forms.Form):
+    password = forms.CharField(widget=forms.PasswordInput())

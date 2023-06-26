@@ -25,6 +25,7 @@ urlpatterns = [
         views.admin_approve,
         name="admin_approve",
     ),
+    path("password_check/", views.password_check, name="password_check"),
     # path(
     #     "collections/<int:collection_id>/mark_delivered/",
     #     views.mark_delivered,
