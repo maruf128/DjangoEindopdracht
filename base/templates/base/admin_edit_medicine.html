@@ -1,0 +1,15 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+    <h1>Pas aan</h1>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Submit">
+    </form>
+
+    <form method="POST" action="{% url 'admin_delete_medicine' medicine.id %}">
+        {% csrf_token %}
+        <input type="submit" value="Delete Medicine">
+    </form>
+{% endblock %}
