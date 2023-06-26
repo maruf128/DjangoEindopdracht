@@ -116,18 +116,29 @@ def admin_approve(request, collection_id):
     return render(request, "base/collection_detail.html", context)
 
 
-# @login_required
-# def collection_detail(request, collection_id):
-#     collection = get_object_or_404(Collection, id=collection_id, user=request.user)
+@staff_member_required
+def medicines(request):
+    medicines = Medicine.objects.filter()
 
-#     if request.method == "POST" and "delivered" in request.POST:
-#         collection.collected_approved = True
-#         collection.collected_approved_by = request.user
-#         collection.save()
-#         # Redirect or display success message
+    context = {"medicines": medicines}
+    return render(request, "base/medicines.html", context)
 
-#     context = {"collection": collection}
-#     return render(request, "base/collection_detail.html", context)
+
+@staff_member_required
+def admin_edit_medicine(request, pk):
+    medicine = Medicine.objects.get(pk=pk)
+
+    if request.method == "POST":
+        form = MedicineForm(request.POST, instance=medicine)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Medicijn gegevens aangepast.")
+            return redirect("user")
+    else:
+        form = MedicineForm(instance=medicine)
+
+    context = {"form": form}
+    return render(request, "base/admin_edit_medicine.html", context)
 
 
 @staff_member_required

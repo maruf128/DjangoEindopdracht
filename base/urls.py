@@ -9,6 +9,16 @@ urlpatterns = [
     path("edit_user/<int:pk>/", views.edit_user, name="edit_user"),
     path("nieuwe_afhaal/", views.nieuwe_afhaal, name="nieuwe_afhaal"),
     path("nieuwe_medicijn/", views.nieuwe_medicijn, name="nieuwe_medicijn"),
+    path(
+        "admin_edit_medicine/<int:pk>/",
+        views.admin_edit_medicine,
+        name="admin_edit_medicine",
+    ),
+    path(
+        "medicines/",
+        views.medicines,
+        name="medicines",
+    ),
     path("collections/", views.collection_list, name="collection_list"),
     path(
         "collections/<int:collection_id>/",
