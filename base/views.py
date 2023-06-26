@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import Profile, Medicine
+from .models import Profile, Medicine, User
 from .forms import ProfileForm, CollectionForm, MedicineForm
 from django.shortcuts import redirect
 from django.contrib import messages
@@ -41,6 +41,8 @@ def user(request):
 @login_required
 def edit_user(request, pk):
     profile = Profile.objects.get(pk=pk)
+    user = profile.user
+
     if request.method == "POST":
         form = ProfileForm(request.POST, instance=profile)
         if form.is_valid():
@@ -49,8 +51,24 @@ def edit_user(request, pk):
             return redirect("user")
     else:
         form = ProfileForm(instance=profile)
+
     context = {"form": form}
     return render(request, "base/useraanpas.html", context)
+
+
+# @login_required
+# def edit_password(request, pk):
+#     profile = Profile.objects.get(pk=pk)
+#     if request.method == "POST":
+#         form = ProfileForm(request.POST, instance=profile)
+#         if form.is_valid():
+#             form.save()
+#             messages.success(request, "Jouw gegevens zijn aangepast")
+#             return redirect("user")
+#     else:
+#         form = ProfileForm(instance=profile)
+#     context = {"form": form}
+#     return render(request, "base/useraanpas.html", context)
 
 
 @staff_member_required
