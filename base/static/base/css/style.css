@@ -20,6 +20,48 @@
     /* Add any other styles for the special class */
 }
 
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+.link-container {
+    margin-top: 10px;
+}
+
+.btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn-primary {
+    background-color: #007bff;
+}
+
+.btn-danger {
+    background-color: #dc3545;
+}
+
+.btn-success {
+    background-color: #28a745;
+}
+
 .link-container {
     text-align: center;
 }
@@ -210,47 +252,6 @@ form input[type="submit"] {
 form input[type="submit"]:hover {
     background-color: #45a049;
 }
-
-/* Form label styles */
-form label {
-    display: block;
-    font-weight: bold;
-    color: #333;
-    margin-bottom: 5px;
-}
-
-/* Form input styles */
-form input[type="text"],
-form input[type="password"] {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    margin-bottom: 5px;
-}
-
-/* Help text styles */
-form .help-text {
-    color: #999;
-    font-size: 12px;
-}
-
-/* Submit button styles */
-form input[type="submit"] {
-    display: inline-block;
-    padding: 10px 20px;
-    background-color: #4CAF50;
-    color: #fff;
-    font-weight: bold;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-form input[type="submit"]:hover {
-    background-color: #45a049;
-}
-
 
 /* login css */
 h1 {
