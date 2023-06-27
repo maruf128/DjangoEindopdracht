@@ -3,7 +3,7 @@
 {% block content %}
 <h1>Ophaal Details</h1>
 <p><strong>Medicijn:</strong>
-  <a id="detail" href="{% url 'medicijn_gegevens' collection.medicine %}">{{collection.medicine }}</a>
+  <a id="detail" href="{% url 'medicijn_gegevens' collection.medicine %}">{{ collection.medicine }}</a>
 </p>
 
 <p><strong>Ophaal Datum:</strong> {{ collection.date }}</p>
@@ -16,4 +16,11 @@
   {{ form.as_p }}
   <button type="submit">Save</button>
 </form>
+
+{% if user.is_staff %}
+  <form method="POST" action="{% url 'collection_delete' collection.id %}">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Delete</button>
+  </form>
+{% endif %}
 {% endblock %}
