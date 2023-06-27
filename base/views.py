@@ -315,26 +315,3 @@ def medicijn_gegevens(request, pk):
     medicine = get_object_or_404(Medicine, pk=pk)
     context = {"medicine": medicine}
     return render(request, "base/medicijn_detail.html", context)
-
-
-# def medicijn_gegevens(request, pk):
-#     ingelogde = request.user
-#     gegevens = Medicine.objects.filter(pk=pk)
-#     if ingelogde.is_superuser:
-#         collection_count = Collection.objects.filter(pk=pk, collected=True).count()
-#         collection_label = "Totale ophalingen:"
-#     else:
-#         collection_count = Collection.objects.filter(
-#             user=ingelogde, pk=pk, collected=True
-#         ).count()
-#         collection_label = "Hoe vaak het gebruikt is:"
-
-#     context = {
-#         "gegevens": gegevens,
-#         "naam": ingelogde,
-#         "collection_count": collection_count,
-#         "collection_label": collection_label,
-#         "medicine": gegevens.first(),  # Add this line to include the 'medicine' variable
-#     }
-
-#     return render(request, "base/medicijn_detail.html", context)
