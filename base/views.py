@@ -195,7 +195,7 @@ def admin_edit_medicine(request, pk):
         if form.is_valid():
             form.save()
             messages.success(request, "Medicijn gegevens aangepast.")
-            return redirect("medicine_detail", pk=medicine.pk)
+            return redirect("medicijn_gegevens", pk=medicine.pk)
     else:
         form = MedicineForm(instance=medicine)
 
