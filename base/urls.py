@@ -50,6 +50,11 @@ urlpatterns = [
         views.admin_approve,
         name="admin_approve",
     ),
+    path(
+        "collection/<int:collection_id>/delete/",
+        views.collection_delete,
+        name="collection_delete",
+    ),
     path("password_check/", views.password_check, name="password_check"),
     path(
         "medicijn_gegevens/<str:name>/",

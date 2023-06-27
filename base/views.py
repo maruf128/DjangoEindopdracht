@@ -112,6 +112,36 @@ def collection(request):
 
 
 @staff_member_required
+def collection_delete(request, collection_id):
+    collection = get_object_or_404(Collection, id=collection_id)
+    if request.method == "POST":
+        collection.delete()
+        return render(request, "base/collection.html")
+    context = {
+        "collection": collection,
+    }
+    return render(request, "collection_delete.html", context)
+
+
+@staff_member_required
+def admin_approve(request, collection_id):
+    collection = get_object_or_404(Collection, id=collection_id)
+
+    if request.method == "POST":
+        form = AdminApproveForm(request.POST, instance=collection)
+        if form.is_valid():
+            form.save()
+    else:
+        form = AdminApproveForm(instance=collection)
+
+    context = {
+        "collection": collection,
+        "form": form,
+    }
+    return render(request, "base/collection.html", context)
+
+
+@staff_member_required
 def admin_approve(request, collection_id):
     collection = get_object_or_404(Collection, id=collection_id)
 

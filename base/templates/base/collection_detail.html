@@ -16,4 +16,9 @@
   {{ form.as_p }}
   <button type="submit">Save</button>
 </form>
+
+<form method="POST" action="{% url 'collection_delete' collection.id %}">
+  {% csrf_token %}
+  <button type="submit" class="btn btn-danger">Delete</button>
+</form>
 {% endblock %}
