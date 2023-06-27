@@ -36,10 +36,6 @@ form {
     margin-bottom: 10px;
 }
 
-.link-container {
-    margin-top: 10px;
-}
-
 .btn {
     padding: 10px 20px;
     border: none;
@@ -63,6 +59,7 @@ form {
 }
 
 .link-container {
+    margin-top: 10px;
     text-align: center;
 }
 
@@ -82,6 +79,27 @@ form {
     background-color: #e0e0e0;
 }
 
+.vertical-link-container {
+    margin-top: 10px;
+    text-align: center;
+}
+
+.vertical-link {
+    display: block;
+    margin: 10px auto;
+    font-weight: bold;
+    text-decoration: none;
+    color: #333;
+    padding: 5px;
+    margin-top: 50px;
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    width: fit-content;
+}
+
+.vertical-link:hover {
+    background-color: #e0e0e0;
+}
 
 .collection-details {
     text-align: center;
