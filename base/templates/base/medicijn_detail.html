@@ -1,6 +1,21 @@
 {% extends 'base/base.html' %}
 
 {% block content %}
+  <h1>Medicine Detail</h1>
+  <p><strong>Name: </strong>{{ medicine.name }}</p>
+  <p><strong>Manufacturer: </strong>{{ medicine.manufacturer }}</p>
+  <p><strong>Cures: </strong>{{ medicine.cures }}</p>
+  <p><strong>Side Effects: </strong>{{ medicine.sideeffects }}</p>
+  <a href="{% url 'admin_edit_medicine' medicine.pk %}" class="btn btn-primary">Edit Medicine</a>
+
+
+
+
+{% endblock %}
+
+{% comment %} {% extends 'base/base.html' %}
+
+{% block content %}
 <div class="user-info">
     {% for data in gegevens %}
     <strong>Naam: </strong> {{ data.name }}<br>
@@ -11,4 +26,5 @@
     <br>
     {% endfor %}
 </div>
-{% endblock content %}
+{% endblock content %} {% endcomment %}
+

@@ -5,10 +5,24 @@
   {% if medicines %}
     <ul>
       {% for medicine in medicines %}
-        <li><a href="{% url 'admin_edit_medicine' medicine.id %}">{{medicine.name}}</a></li>
+        <li><a href="{% url 'medicijn_gegevens' medicine.id %}">{{ medicine.name }}</a></li>
       {% endfor %}
     </ul>
   {% else %}
     <p>Er zijn geen medicijnen.</p>
   {% endif %}
 {% endblock %}
+{% comment %} {% extends 'base/base.html' %}
+
+{% block content %}
+  <h1>Medicijn overzicht</h1>
+  {% if medicines %}
+    <ul>
+      {% for medicine in medicines %}
+        <li><a href="{% url 'admin_edit_medicine' medicine.id %}">{{medicine.name}}</a></li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>Er zijn geen medicijnen.</p>
+  {% endif %}
+{% endblock %} {% endcomment %}

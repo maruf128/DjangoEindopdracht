@@ -168,6 +168,24 @@ def medicines(request):
     return render(request, "base/medicines.html", context)
 
 
+# @staff_member_required
+# def admin_edit_medicine(request, pk):
+#     medicine = Medicine.objects.get(pk=pk)
+
+#     if request.method == "POST":
+#         form = MedicineForm(request.POST, instance=medicine)
+#         if form.is_valid():
+#             form.save()
+#             messages.success(request, "Medicijn gegevens aangepast.")
+#             return redirect("user")
+#     else:
+#         form = MedicineForm(instance=medicine)
+
+#     # Add 'medicine' to the context
+#     context = {"form": form, "medicine": medicine}
+#     return render(request, "base/admin_edit_medicine.html", context)
+
+
 @staff_member_required
 def admin_edit_medicine(request, pk):
     medicine = Medicine.objects.get(pk=pk)
@@ -177,11 +195,10 @@ def admin_edit_medicine(request, pk):
         if form.is_valid():
             form.save()
             messages.success(request, "Medicijn gegevens aangepast.")
-            return redirect("user")
+            return redirect("medicine_detail", pk=medicine.pk)
     else:
         form = MedicineForm(instance=medicine)
 
-    # Add 'medicine' to the context
     context = {"form": form, "medicine": medicine}
     return render(request, "base/admin_edit_medicine.html", context)
 
@@ -294,17 +311,15 @@ def collection_detail(request, collection_id):
 
 
 @login_required
-def medicijn_gegevens(request, name):
+def medicijn_gegevens(request, pk):
     ingelogde = request.user
-    gegevens = Medicine.objects.filter(name=name)
+    gegevens = Medicine.objects.filter(pk=pk)
     if ingelogde.is_superuser:
-        collection_count = Collection.objects.filter(
-            medicine__name=name, collected=True
-        ).count()
+        collection_count = Collection.objects.filter(pk=pk, collected=True).count()
         collection_label = "Totale ophalingen:"
     else:
         collection_count = Collection.objects.filter(
-            user=ingelogde, medicine__name=name, collected=True
+            user=ingelogde, pk=pk, collected=True
         ).count()
         collection_label = "Hoe vaak het gebruikt is:"
 
@@ -313,5 +328,7 @@ def medicijn_gegevens(request, name):
         "naam": ingelogde,
         "collection_count": collection_count,
         "collection_label": collection_label,
+        "medicine": gegevens.first(),  # Add this line to include the 'medicine' variable
     }
+
     return render(request, "base/medicijn_detail.html", context)
