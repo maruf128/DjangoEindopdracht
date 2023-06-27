@@ -29,6 +29,11 @@ urlpatterns = [
         views.medicine,
         name="medicine",
     ),
+    path(
+        "collection/",
+        views.collection,
+        name="collection",
+    ),
     path("collections/", views.collection_list, name="collection_list"),
     path(
         "collections/<int:collection_id>/",
@@ -46,8 +51,11 @@ urlpatterns = [
         name="admin_approve",
     ),
     path("password_check/", views.password_check, name="password_check"),
-    path("medicijn_gegevens/<str:name>/",
-         views.medicijn_gegevens, name="medicijn_gegevens"),
+    path(
+        "medicijn_gegevens/<str:name>/",
+        views.medicijn_gegevens,
+        name="medicijn_gegevens",
+    ),
     # path(
     #     "collections/<int:collection_id>/mark_delivered/",
     #     views.mark_delivered,

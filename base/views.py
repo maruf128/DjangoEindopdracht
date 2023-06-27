@@ -55,8 +55,7 @@ def password_check(request):
         form = PasswordCheckForm(request.POST)
         if form.is_valid():
             password = form.cleaned_data.get("password")
-            user = authenticate(
-                username=request.user.username, password=password)
+            user = authenticate(username=request.user.username, password=password)
             if user is not None and user == request.user:
                 return redirect("edit_user", pk=request.user.pk)
             else:
@@ -88,8 +87,7 @@ def edit_user(request, pk):
 
 @login_required
 def collection_list(request):
-    collections = Collection.objects.filter(
-        user=request.user, collectedapproved=False)
+    collections = Collection.objects.filter(user=request.user, collectedapproved=False)
 
     context = {"collections": collections}
     return render(request, "base/collection_list.html", context)
@@ -106,6 +104,11 @@ def admin_collection_list(request):
 @staff_member_required
 def medicine(request):
     return render(request, "base/medicine.html")
+
+
+@staff_member_required
+def collection(request):
+    return render(request, "base/collection.html")
 
 
 @staff_member_required
@@ -195,8 +198,7 @@ def nieuwe_medicijn(request):
 
 @login_required
 def collection_detail(request, collection_id):
-    collection = get_object_or_404(
-        Collection, id=collection_id, user=request.user)
+    collection = get_object_or_404(Collection, id=collection_id, user=request.user)
 
     if request.method == "POST":
         form = CollectionDetailForm(request.POST, instance=collection)
@@ -218,7 +220,11 @@ def medicijn_gegevens(request, name):
     ingelogde = request.user
     gegevens = Medicine.objects.filter(name=name)
     collection_count = Collection.objects.filter(
-        user=ingelogde, medicine__name=name, collected=True).count()
-    context = {"gegevens": gegevens, "naam": ingelogde,
-               "collection_count": collection_count}
+        user=ingelogde, medicine__name=name, collected=True
+    ).count()
+    context = {
+        "gegevens": gegevens,
+        "naam": ingelogde,
+        "collection_count": collection_count,
+    }
     return render(request, "base/medicijn_detail.html", context)
