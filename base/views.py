@@ -199,12 +199,52 @@ def nieuwe_afhaal(request):
     if request.method == "POST":
         form = CollectionForm(request.POST)
         if form.is_valid():
-            form.save()
-            messages.success(request, "Nieuwe afhaal actie toegevoegd")
-            return redirect("user")
+            # krijg de data uit de formulier
+            user = form.cleaned_data.get('user')
+            date = form.cleaned_data.get('date')
+            medicijn = form.cleaned_data.get('medicine')
+            # kijk of er al een collectie voor bestaat
+            existing_collection = Collection.objects.filter(user=user, date=date, medicine=medicijn).exists()
+            if existing_collection:
+                messages.error(request, "Er bestaat al een afhaal actie voor de gebruiker op de opgegeven datum.")
+                return redirect("user")
+            else:
+                form.save()
+                messages.success(request, "Nieuwe afhaal actie toegevoegd")
+                return redirect("user")
     else:
         form = CollectionForm()
     context = {"form": form}
+    return render(request, "base/afhaalform.html", context)
+
+
+@staff_member_required
+def afhaal_medicijn(request, pk):
+    # krijg de medicine, 404 gekregen van gpt zorgt ervoor dat
+    # er een error komt zodra de medicijn niet gevonden word
+    medicine = get_object_or_404(Medicine, id=pk)
+    if request.method == "POST":
+        form = CollectionForm(request.POST)
+        if form.is_valid():
+            # krijg de data uit de tabel
+            user = form.cleaned_data.get('user')
+            date = form.cleaned_data.get('date')
+            # kijk of het bestaat
+            existing_collection = Collection.objects.filter(user=user,
+                                                            date=date,
+                                                            medicine=medicine).exists()
+            if existing_collection:
+                messages.error(request, "Er bestaat al een afhaal actie voor de gebruiker op de opgegeven datum.")
+                return redirect("user")
+            else:
+                form.save()
+                messages.success(request, "Nieuwe afhaal actie toegevoegd")
+                return redirect("user")
+    else:
+        # anders maak je de formulier met de gegeven medicijn
+        initial_data = {'medicine': medicine.name}
+        form = CollectionForm(initial=initial_data)
+    context = {"form": form, "medicijn": medicine.name}
     return render(request, "base/afhaalform.html", context)
 
 

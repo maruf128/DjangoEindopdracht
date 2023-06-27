@@ -4,8 +4,19 @@
     <h1>Voeg een nieuwe afhaal actie toe</h1>
     <form method="POST">
         {% csrf_token %}
-        {{ form.as_p}}
+        <label for="{{ form.medicine.id_for_label }}">Medicine:</label>
+        {% if medicijn %}
+        {{ form.medicine.as_hidden }}
+        <input type="text" name="medicine" value="{{ medicijn }}" readonly>
+        {% else %}
+            {{ form.medicine }}
+        {% endif %}
+        <label for="{{ form.user.id_for_label }}">User:</label>
+        {{ form.user }}
+        <label for="{{ form.date.id_for_label }}">Date:</label>
+        {{ form.date }}
         <p><span class="help-text">Vul de datum in deze format in: YYYY-MM-DD.</span></p>
         <input type="submit" value="Toevoegen">
     </form>
+    
 {% endblock content %}

@@ -12,4 +12,9 @@
         {% csrf_token %}
         <input type="submit" value="Delete Medicine">
     </form>
+    {% comment %} maak een button voor het  aanmaken van een afhaal actie met dezer medicijn{% endcomment %}
+    <form method="POST" action="{% url 'afhaal_medicijn' medicine.id %}">
+        {% csrf_token %}
+        <input type="submit" value="+ Afhaal">
+    </form>
 {% endblock %}
