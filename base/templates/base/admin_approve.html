@@ -1,17 +1,17 @@
 {% extends 'base/base.html' %}
 
 {% block content %}
-  <h1>Ophaal Details</h1>
-  <p><strong>Gebruiker:</strong> {{ collection.user }}</p>
-  <p><strong>Medicijn:</strong> {{ collection.medicine }}</p>
-  <p><strong>Ophaal Datum:</strong> {{ collection.date }}</p>
-  {% if collection.collected %}
-    <p><strong>Medwerker goedkeuring:</strong> {{ collection.collectedapproved }}</p>
-  {% endif %}
+<h1>Ophaal Details</h1>
+<p><strong>Gebruiker:</strong> {{ collection.user }}</p>
+<p><strong>Medicijn:</strong> {{ collection.medicine }}</p>
+<p><strong>Ophaal Datum:</strong> {{ collection.date }}</p>
+{% if collection.collected %}
+<p><strong>Medwerker goedkeuring:</strong> {{ collection.collectedapproved }}</p>
+{% endif %}
 
-  <form method="POST">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Save</button>
-  </form>
+<form method="POST">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">Save</button>
+</form>
 {% endblock %}

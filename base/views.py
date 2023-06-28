@@ -133,46 +133,21 @@ def admin_approve(request, collection_id):
     if request.method == "POST":
         form = AdminApproveForm(request.POST, instance=collection)
         if form.is_valid():
-            form.save()
-    else:
-        form = AdminApproveForm(instance=collection)
-
-    context = {
-        "collection": collection,
-        "form": form,
-    }
-    return render(request, "base/collection.html", context)
-
-
-@staff_member_required
-def admin_approve(request, collection_id):
-    collection = get_object_or_404(Collection, id=collection_id)
-
-    if request.method == "POST":
-        form = AdminApproveForm(request.POST, instance=collection)
-        if form.is_valid():
-            form.save()
+            collection = form.save(commit=False)
+            collection.collectedapprovedby = request.user
+            collection.save()
             # Handle form submission success
     else:
         form = AdminApproveForm(instance=collection)
-        # Retrieve user ID from Collection
+
+    # Retrieve the user associated with the collection
     user_id = collection.user_id
+    user = User.objects.get(id=user_id)
 
-    try:
-        # Retrieve User object
-        user = User.objects.get(id=user_id)
-
-        # Retrieve associated Profile object
-        profile = Profile.objects.get(user=user)
-
-        # Get the username from Profile
-        username = profile.user.username
-    except (User.DoesNotExist, Profile.DoesNotExist):
-        username = None
     context = {
         "collection": collection,
         "form": form,
-        "naam": username,
+        "naam": user.username if user else None,
     }
     return render(request, "base/collection_detail.html", context)
 
