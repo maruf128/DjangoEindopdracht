@@ -1,0 +1,15 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+<h1>Collection Details</h1>
+<p><strong>Medicine:</strong> {{ collection.medicine }}</p>
+<p><strong>User:</strong> {{ user.username }} with id:{{ collection.user }}</p>
+<p><strong>Date:</strong> {{ collection.date }}</p>
+<!-- Display other collection details as desired -->
+<h2>Admin Collection Detail</h2>
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Save">
+</form>
+{% endblock content %}

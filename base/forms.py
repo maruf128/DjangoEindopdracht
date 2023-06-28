@@ -27,6 +27,12 @@ class CollectionForm(forms.ModelForm):
         fields = ["medicine", "user", "date"]
 
 
+class TotaalCollectionFrom(forms.ModelForm):
+    class Meta:
+        model = Collection
+        fields = '__all__'
+
+
 class MedicineForm(forms.ModelForm):
     class Meta:
         model = Medicine

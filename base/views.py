@@ -7,6 +7,7 @@ from .forms import (
     MedicineForm,
     AdminApproveForm,
     PasswordCheckForm,
+    TotaalCollectionFrom,
     MedicineEditForm,
 )
 from django.shortcuts import redirect
@@ -55,7 +56,8 @@ def password_check(request):
         form = PasswordCheckForm(request.POST)
         if form.is_valid():
             password = form.cleaned_data.get("password")
-            user = authenticate(username=request.user.username, password=password)
+            user = authenticate(
+                username=request.user.username, password=password)
             if user is not None and user == request.user:
                 return redirect("edit_user", pk=request.user.pk)
             else:
@@ -87,7 +89,8 @@ def edit_user(request, pk):
 
 @login_required
 def collection_list(request):
-    collections = Collection.objects.filter(user=request.user, collectedapproved=False)
+    collections = Collection.objects.filter(
+        user=request.user.id, collectedapproved=False)
 
     context = {"collections": collections}
     return render(request, "base/collection_list.html", context)
@@ -152,10 +155,24 @@ def admin_approve(request, collection_id):
             # Handle form submission success
     else:
         form = AdminApproveForm(instance=collection)
+        # Retrieve user ID from Collection
+    user_id = collection.user_id
 
+    try:
+        # Retrieve User object
+        user = User.objects.get(id=user_id)
+
+        # Retrieve associated Profile object
+        profile = Profile.objects.get(user=user)
+
+        # Get the username from Profile
+        username = profile.user.username
+    except (User.DoesNotExist, Profile.DoesNotExist):
+        username = None
     context = {
         "collection": collection,
         "form": form,
+        "naam": username,
     }
     return render(request, "base/collection_detail.html", context)
 
@@ -293,7 +310,8 @@ def nieuwe_medicijn(request):
 
 @login_required
 def collection_detail(request, collection_id):
-    collection = get_object_or_404(Collection, id=collection_id, user=request.user)
+    collection = get_object_or_404(
+        Collection, id=collection_id, user=request.user.id)
 
     if request.method == "POST":
         form = CollectionDetailForm(request.POST, instance=collection)
@@ -315,3 +333,35 @@ def medicijn_gegevens(request, pk):
     medicine = get_object_or_404(Medicine, pk=pk)
     context = {"medicine": medicine}
     return render(request, "base/medicijn_detail.html", context)
+
+
+@staff_member_required
+def user_collection(request, pk):
+
+    profile = Profile.objects.get(pk=pk)
+    collections = Collection.objects.filter(user=pk)
+
+    context = {"collections": collections, "naam": profile}
+    return render(request, "base/collection_list.html", context)
+
+
+@staff_member_required
+def admin_collection_detail(request, pk):
+    collection = get_object_or_404(Collection, pk=pk)
+    user = User.objects.get(pk=collection.user_id)
+
+    if request.method == "POST":
+        form = TotaalCollectionFrom(request.POST, instance=collection)
+        if form.is_valid():
+            form.save()
+            # Handle form submission success
+            return redirect("user_collection", pk=user.id)
+    else:
+        form = TotaalCollectionFrom(instance=collection)
+
+    context = {
+        "collection": collection,
+        "form": form,
+        "user": user,
+    }
+    return render(request, "base/admin_collection_detail.html", context)

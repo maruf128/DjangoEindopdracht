@@ -8,7 +8,8 @@ urlpatterns = [
     path("user/", views.user, name="user"),
     path("edit_user/<int:pk>/", views.edit_user, name="edit_user"),
     path("nieuwe_afhaal/", views.nieuwe_afhaal, name="nieuwe_afhaal"),
-    path("afhaal_medicijn/<int:pk>/", views.afhaal_medicijn, name="afhaal_medicijn"),
+    path("afhaal_medicijn/<int:pk>/",
+         views.afhaal_medicijn, name="afhaal_medicijn"),
     path("nieuwe_medicijn/", views.nieuwe_medicijn, name="nieuwe_medicijn"),
     path(
         "admin_edit_medicine/<int:pk>/",
@@ -61,6 +62,16 @@ urlpatterns = [
         "medicijn_gegevens/<int:pk>/",
         views.medicijn_gegevens,
         name="medicijn_gegevens",
+    ),
+    path(
+        "user_collection/<int:pk>/",
+        views.user_collection,
+        name="user_collection",
+    ),
+    path(
+        "admin_collection_detail/<int:pk>/",
+        views.admin_collection_detail,
+        name="admin_collection_detail",
     ),
     # path(
     #     "collections/<int:collection_id>/mark_delivered/",

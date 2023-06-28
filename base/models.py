@@ -12,7 +12,7 @@ class Profile(models.Model):
     date_of_birth = models.DateField(null=True, blank=True)
 
     def __str__(self):
-        return self.user.username
+        return str(self.user.id)
 
 
 class Medicine(models.Model):
@@ -28,7 +28,7 @@ class Medicine(models.Model):
 class Collection(models.Model):
     medicine = models.ForeignKey(
         Medicine, on_delete=models.CASCADE, null=False)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(Profile, on_delete=models.CASCADE)
     date = models.DateField(null=True, blank=True)
     collected = models.BooleanField(default=False)
     collectedapproved = models.BooleanField(default=False)
