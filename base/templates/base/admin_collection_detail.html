@@ -3,7 +3,7 @@
 {% block content %}
 <h1>Collection Details</h1>
 <p><strong>Medicine:</strong> {{ collection.medicine }}</p>
-<p><strong>User:</strong> {{ user.username }} with id:{{ collection.user }}</p>
+<p><strong>User:</strong> {{ user.username }}</p>
 <p><strong>Date:</strong> {{ collection.date }}</p>
 <!-- Display other collection details as desired -->
 <h2>Admin Collection Detail</h2>
@@ -11,5 +11,12 @@
     {% csrf_token %}
     {{ form.as_p }}
     <input type="submit" value="Save">
+</form>
+<!--  om het te verwijderen -->
+<form method="POST" action="{% url 'collection_delete' collection.id %}">
+    {% csrf_token %}
+    <div class="link-container">
+        <button type="submit" class="btn btn-danger">Delete</button>
+    </div>
 </form>
 {% endblock content %}
