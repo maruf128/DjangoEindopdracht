@@ -26,11 +26,23 @@ class CollectionForm(forms.ModelForm):
         model = Collection
         fields = ["medicine", "user", "date"]
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        users = User.objects.all()
+        user_choices = [(user.id, user.username) for user in users]
+        self.fields["user"].widget = forms.Select(choices=user_choices)
+
 
 class TotaalCollectionFrom(forms.ModelForm):
     class Meta:
         model = Collection
         fields = '__all__'
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        users = User.objects.all()
+        user_choices = [(user.id, user.username) for user in users]
+        self.fields["user"].widget = forms.Select(choices=user_choices)
 
 
 class MedicineForm(forms.ModelForm):

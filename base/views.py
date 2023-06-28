@@ -353,9 +353,19 @@ def admin_collection_detail(request, pk):
     if request.method == "POST":
         form = TotaalCollectionFrom(request.POST, instance=collection)
         if form.is_valid():
-            form.save()
-            # Handle form submission success
-            return redirect("user_collection", pk=user.id)
+            # Check if there is already a collection for the same user, date, and medicine
+            user = form.cleaned_data.get("user")
+            date = form.cleaned_data.get("date")
+            medicine = form.cleaned_data.get("medicine")
+            existing_collection = Collection.objects.filter(
+                user=user, date=date, medicine=medicine).exclude(pk=pk).exists()
+            if existing_collection:
+                messages.error(
+                    request, "Er bestaat al een afhaal actie voor de gebruiker op de opgegeven datum en medicijn.")
+            else:
+                form.save()
+                messages.success(request, "Afhaal actie bijgewerkt")
+                return redirect("user_collection", pk=user.id)
     else:
         form = TotaalCollectionFrom(instance=collection)
 
