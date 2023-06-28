@@ -163,8 +163,6 @@ form {
 
 /* static.css */
 
-
-
 .container {
     display: flex;
     justify-content: flex-end;
@@ -175,7 +173,7 @@ form {
 }
 
 .container .picture {
-    flex: 1;
+    flex: 2;
 }
 
 .container .picture img {
@@ -186,8 +184,14 @@ form {
 }
 
 .container .bio {
-    flex: 2;
+    flex: 1;
 }
+
+.bio p {
+    text-align: start;
+}
+
+
 
 /* user gegevens */
 .user-info {

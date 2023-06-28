@@ -28,20 +28,43 @@ class CollectionForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        medicines = Medicine.objects.all()
+        medicine_choices = [
+            (None, "-----")] + [(medicine.id, medicine.name) for medicine in medicines]
+        self.fields["medicine"].widget = forms.Select(choices=medicine_choices)
         users = User.objects.all()
-        user_choices = [(user.id, user.username) for user in users]
+        user_choices = [(None, "-----")] + [(user.id, user.username)
+                                            for user in users]
         self.fields["user"].widget = forms.Select(choices=user_choices)
 
 
-class TotaalCollectionFrom(forms.ModelForm):
+class CollectionFormMedicine(forms.ModelForm):
+    class Meta:
+        model = Collection
+        fields = ["user", "date"]
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        users = User.objects.all()
+        user_choices = [(None, "-----")] + [(user.id, user.username)
+                                            for user in users]
+        self.fields["user"].widget = forms.Select(choices=user_choices)
+
+
+class TotaalCollectionForm(forms.ModelForm):
     class Meta:
         model = Collection
         fields = '__all__'
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        medicines = Medicine.objects.all()
+        medicine_choices = [
+            (None, "-----")] + [(medicine.id, medicine.name) for medicine in medicines]
+        self.fields["medicine"].widget = forms.Select(choices=medicine_choices)
         users = User.objects.all()
-        user_choices = [(user.id, user.username) for user in users]
+        user_choices = [(None, "-----")] + [(user.id, user.username)
+                                            for user in users]
         self.fields["user"].widget = forms.Select(choices=user_choices)
 
 

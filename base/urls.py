@@ -32,7 +32,7 @@ urlpatterns = [
         name="medicine",
     ),
     path(
-        "collection/",
+        "F/",
         views.collection,
         name="collection",
     ),

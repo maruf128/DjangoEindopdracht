@@ -22,7 +22,7 @@ class Medicine(models.Model):
     sideeffects = models.TextField()
 
     def __str__(self):
-        return f"{self.name}"
+        return str(self.id)
 
 
 class Collection(models.Model):

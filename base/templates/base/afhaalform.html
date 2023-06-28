@@ -5,9 +5,7 @@
 {% if medicijn %}
 <form method="POST">
     {% csrf_token %}
-    <label for="{{ form.medicine.id_for_label }}">Medicine:</label>
-    {{ form.medicine.as_hidden }}
-    <input type="text" name="medicine" value="{{ medicijn }}" readonly>
+    <input type="hidden" name="medicine" value="{{ medicine.id }}">
     <label for="{{ form.user.id_for_label }}">User:</label>
     {{ form.user }}
     <label for="{{ form.date.id_for_label }}">Date:</label>

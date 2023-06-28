@@ -7,7 +7,8 @@ from .forms import (
     MedicineForm,
     AdminApproveForm,
     PasswordCheckForm,
-    TotaalCollectionFrom,
+    TotaalCollectionForm,
+    CollectionFormMedicine,
     MedicineEditForm,
 )
 from django.shortcuts import redirect
@@ -129,6 +130,7 @@ def collection_delete(request, collection_id):
 @staff_member_required
 def admin_approve(request, collection_id):
     collection = get_object_or_404(Collection, id=collection_id)
+    medicine = Medicine.objects.get(pk=collection.medicine_id)
 
     if request.method == "POST":
         form = AdminApproveForm(request.POST, instance=collection)
@@ -147,7 +149,8 @@ def admin_approve(request, collection_id):
     context = {
         "collection": collection,
         "form": form,
-        "naam": user.username if user else None,
+        "naam": user.username,
+        "medicine_name": medicine.name,
     }
     return render(request, "base/collection_detail.html", context)
 
@@ -234,18 +237,17 @@ def nieuwe_afhaal(request):
 
 @staff_member_required
 def afhaal_medicijn(request, pk):
-    # krijg de medicine, 404 gekregen van gpt zorgt ervoor dat
-    # er een error komt zodra de medicijn niet gevonden word
+    # Get the medicine object based on the ID
     medicine = get_object_or_404(Medicine, id=pk)
+
     if request.method == "POST":
-        form = CollectionForm(request.POST)
+        form = CollectionFormMedicine(request.POST)
         if form.is_valid():
-            # krijg de data uit de tabel
-            user = form.cleaned_data.get("user")
-            date = form.cleaned_data.get("date")
-            # kijk of het bestaat
+            collection = form.save(commit=False)
+            collection.medicine = medicine  # Set the medicine manually
+            # Check if a collection already exists for the user and date
             existing_collection = Collection.objects.filter(
-                user=user, date=date, medicine=medicine
+                user=collection.user, date=collection.date, medicine=medicine
             ).exists()
             if existing_collection:
                 messages.error(
@@ -254,14 +256,13 @@ def afhaal_medicijn(request, pk):
                 )
                 return redirect("user")
             else:
-                form.save()
+                collection.save()
                 messages.success(request, "Nieuwe afhaal actie toegevoegd")
                 return redirect("user")
     else:
-        # anders maak je de formulier met de gegeven medicijn
-        initial_data = {"medicine": medicine.name}
-        form = CollectionForm(initial=initial_data)
-    context = {"form": form, "medicijn": medicine.name}
+        form = CollectionFormMedicine()
+
+    context = {"form": form, "medicijn": medicine}
     return render(request, "base/afhaalform.html", context)
 
 
@@ -324,29 +325,31 @@ def user_collection(request, pk):
 def admin_collection_detail(request, pk):
     collection = get_object_or_404(Collection, pk=pk)
     user = User.objects.get(pk=collection.user_id)
+    medicine = collection.medicine
 
     if request.method == "POST":
-        form = TotaalCollectionFrom(request.POST, instance=collection)
+        form = TotaalCollectionForm(request.POST, instance=collection)
         if form.is_valid():
             # Check if there is already a collection for the same user, date, and medicine
             user = form.cleaned_data.get("user")
             date = form.cleaned_data.get("date")
-            medicine = form.cleaned_data.get("medicine")
             existing_collection = Collection.objects.filter(
                 user=user, date=date, medicine=medicine).exclude(pk=pk).exists()
             if existing_collection:
                 messages.error(
-                    request, "Er bestaat al een afhaal actie voor de gebruiker op de opgegeven datum en medicijn.")
+                    request, "Er bestaat al een afhaal actie voor de gebruiker op de opgegeven datum en medicijn."
+                )
             else:
                 form.save()
                 messages.success(request, "Afhaal actie bijgewerkt")
                 return redirect("user_collection", pk=user.id)
     else:
-        form = TotaalCollectionFrom(instance=collection)
+        form = TotaalCollectionForm(instance=collection)
 
     context = {
         "collection": collection,
         "form": form,
         "user": user,
+        "medicine": medicine,
     }
     return render(request, "base/admin_collection_detail.html", context)
