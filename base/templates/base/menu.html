@@ -4,18 +4,17 @@
   {% if user.is_authenticated %}
   <a href="{% url 'index' %}">Home</a>
   <a href="{% url 'user' %}">Eigen gegevens</a>
-  {% if not user.is_staff %}
+  {% if not request.user.is_staff %}
   <a href="{% url 'collection_list' %}">Mijn medicijnen</a>
   {% endif %}
-  {% if user.is_staff %}
-  {% comment %} speciale pages voor admin {% endcomment %}
+  {% if request.user.is_staff %}
+  <!-- Admin-specific links -->
   <a href="{% url 'medicine' %}">Medicijn opties</a>
   <a href="{% url 'collection' %}">Afhaal opties</a>
-  {% comment %} <a href="{% url 'nieuwe_afhaal'%}">+ Afhaal</a> {% endcomment %}
-  {% comment %} <a href="{% url 'nieuwe_medicijn'%}">+ Medicijn</a> {% endcomment %}
   {% endif %}
   <a href="{% url 'logout'%}">Logout</a>
   {% else %}
+  <!-- Non-authenticated user links -->
   {% if request.path == '/login/' or request.path == '/register/' %}
   <a href="{% url 'index' %}">Terug gaan</a>
   {% endif %}
