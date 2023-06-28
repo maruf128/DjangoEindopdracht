@@ -4,9 +4,11 @@
   <h1>Medicijn overzicht</h1>
   {% if medicines %}
     <ul>
-      {% for medicine in medicines %}
-        <li><a href="{% url 'admin_edit_medicine' medicine.id %}">{{medicine.name}}</a></li>
-      {% endfor %}
+      <div class="vertical-link-container">
+        {% for medicine in medicines %}
+          <a class="vertical-link" href="{% url 'medicijn_gegevens' medicine.id %}">{{ medicine.name }}</a>
+        {% endfor %}
+      </div>
     </ul>
   {% else %}
     <p>Er zijn geen medicijnen.</p>

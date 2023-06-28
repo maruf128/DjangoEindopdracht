@@ -1,16 +1,15 @@
 {% extends 'base/base.html' %}
 
 {% block content %}
-<h1>Your Collections</h1>
+<h1>Uw Ophalingen</h1>
+<p>Alle ophalingen niet goedgekeurd door een medewerker.</p>
 {% if collections %}
-<ul>
-  {% for collection in collections %}
-  <li><a href="{% url 'collection_detail' collection.id %}">
-      <p>{{collection.date}}</p>
-    </a></li>
-  {% endfor %}
-</ul>
+  <div class="vertical-link-container">
+    {% for collection in collections %}
+    <a class="vertical-link" href="{% url 'collection_detail' collection.id %}">{{collection.date}}</a>
+    {% endfor %}
+  </div>
 {% else %}
-<p>You don't have any collections yet.</p>
+<p>U heeft geen afhaal momenten.</p>
 {% endif %}
 {% endblock %}

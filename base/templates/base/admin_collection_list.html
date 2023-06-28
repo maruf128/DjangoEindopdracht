@@ -3,11 +3,11 @@
 {% block content %}
   <h1>Unapproved Collections</h1>
   {% if collections %}
-    <ul>
+    <div class="vertical-link-container">
       {% for collection in collections %}
-        <li><a href="{% url 'admin_approve' collection.id %}">{{collection.date}}</a></li>
+        <a class="vertical-link" href="{% url 'admin_approve' collection.id %}">{{collection.date}}</a>
       {% endfor %}
-    </ul>
+    </div>
   {% else %}
     <p>There are no unapproved collections.</p>
   {% endif %}

@@ -168,6 +168,24 @@ def medicines(request):
     return render(request, "base/medicines.html", context)
 
 
+# @staff_member_required
+# def admin_edit_medicine(request, pk):
+#     medicine = Medicine.objects.get(pk=pk)
+
+#     if request.method == "POST":
+#         form = MedicineForm(request.POST, instance=medicine)
+#         if form.is_valid():
+#             form.save()
+#             messages.success(request, "Medicijn gegevens aangepast.")
+#             return redirect("user")
+#     else:
+#         form = MedicineForm(instance=medicine)
+
+#     # Add 'medicine' to the context
+#     context = {"form": form, "medicine": medicine}
+#     return render(request, "base/admin_edit_medicine.html", context)
+
+
 @staff_member_required
 def admin_edit_medicine(request, pk):
     medicine = Medicine.objects.get(pk=pk)
@@ -177,11 +195,10 @@ def admin_edit_medicine(request, pk):
         if form.is_valid():
             form.save()
             messages.success(request, "Medicijn gegevens aangepast.")
-            return redirect("user")
+            return redirect("medicijn_gegevens", pk=medicine.pk)
     else:
         form = MedicineForm(instance=medicine)
 
-    # Add 'medicine' to the context
     context = {"form": form, "medicine": medicine}
     return render(request, "base/admin_edit_medicine.html", context)
 
@@ -200,13 +217,18 @@ def nieuwe_afhaal(request):
         form = CollectionForm(request.POST)
         if form.is_valid():
             # krijg de data uit de formulier
-            user = form.cleaned_data.get('user')
-            date = form.cleaned_data.get('date')
-            medicijn = form.cleaned_data.get('medicine')
+            user = form.cleaned_data.get("user")
+            date = form.cleaned_data.get("date")
+            medicijn = form.cleaned_data.get("medicine")
             # kijk of er al een collectie voor bestaat
-            existing_collection = Collection.objects.filter(user=user, date=date, medicine=medicijn).exists()
+            existing_collection = Collection.objects.filter(
+                user=user, date=date, medicine=medicijn
+            ).exists()
             if existing_collection:
-                messages.error(request, "Er bestaat al een afhaal actie voor de gebruiker op de opgegeven datum.")
+                messages.error(
+                    request,
+                    "Er bestaat al een afhaal actie voor de gebruiker op de opgegeven datum.",
+                )
                 return redirect("user")
             else:
                 form.save()
@@ -227,14 +249,17 @@ def afhaal_medicijn(request, pk):
         form = CollectionForm(request.POST)
         if form.is_valid():
             # krijg de data uit de tabel
-            user = form.cleaned_data.get('user')
-            date = form.cleaned_data.get('date')
+            user = form.cleaned_data.get("user")
+            date = form.cleaned_data.get("date")
             # kijk of het bestaat
-            existing_collection = Collection.objects.filter(user=user,
-                                                            date=date,
-                                                            medicine=medicine).exists()
+            existing_collection = Collection.objects.filter(
+                user=user, date=date, medicine=medicine
+            ).exists()
             if existing_collection:
-                messages.error(request, "Er bestaat al een afhaal actie voor de gebruiker op de opgegeven datum.")
+                messages.error(
+                    request,
+                    "Er bestaat al een afhaal actie voor de gebruiker op de opgegeven datum.",
+                )
                 return redirect("user")
             else:
                 form.save()
@@ -242,7 +267,7 @@ def afhaal_medicijn(request, pk):
                 return redirect("user")
     else:
         # anders maak je de formulier met de gegeven medicijn
-        initial_data = {'medicine': medicine.name}
+        initial_data = {"medicine": medicine.name}
         form = CollectionForm(initial=initial_data)
     context = {"form": form, "medicijn": medicine.name}
     return render(request, "base/afhaalform.html", context)
@@ -286,15 +311,7 @@ def collection_detail(request, collection_id):
 
 
 @login_required
-def medicijn_gegevens(request, name):
-    ingelogde = request.user
-    gegevens = Medicine.objects.filter(name=name)
-    collection_count = Collection.objects.filter(
-        user=ingelogde, medicine__name=name, collected=True
-    ).count()
-    context = {
-        "gegevens": gegevens,
-        "naam": ingelogde,
-        "collection_count": collection_count,
-    }
+def medicijn_gegevens(request, pk):
+    medicine = get_object_or_404(Medicine, pk=pk)
+    context = {"medicine": medicine}
     return render(request, "base/medicijn_detail.html", context)
