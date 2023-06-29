@@ -11,6 +11,9 @@
     <label for="{{ form.date.id_for_label }}">Date:</label>
     {{ form.date }}
     <p><span class="help-text">Vul de datum in deze format in: YYYY-MM-DD.</span></p>
+    {% if form.errors.date %}
+        <p class="error-message">{{ form.errors.date }}</p>
+    {% endif %}
     <input type="submit" value="Toevoegen">
 </form>
 {% else %}
@@ -23,6 +26,9 @@
     <label for="{{ form.date.id_for_label }}">Date:</label>
     {{ form.date }}
     <p><span class="help-text">Vul de datum in deze format in: YYYY-MM-DD.</span></p>
+    {% if form.errors.date %}
+        <p class="error-message">{{ form.errors.date }}</p>
+    {% endif %}
     <input type="submit" value="Toevoegen">
 </form>
 {% endif %}
