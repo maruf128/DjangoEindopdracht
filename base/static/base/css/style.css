@@ -289,9 +289,14 @@ h2 {
     height: 50px;
     display: flex;
     justify-content: center;
-    border-radius: 50%;
-    padding: 5px;
+    align-items: center;
     text-align: center;
+}
+
+.error,
+.success {
+    border-radius: 5px;
+    padding: 5px 10px;
 }
 
 .error {
@@ -303,6 +308,7 @@ h2 {
     background-color: rgb(29, 151, 118);
     color: white;
 }
+
 
 
 /* Collection List styles */
