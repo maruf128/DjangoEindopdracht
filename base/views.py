@@ -228,7 +228,7 @@ def nieuwe_afhaal(request):
             if existing_collection:
                 messages.error(
                     request,
-                    "Er bestaat al een afhaal actie voor de gebruiker op de opgegeven datum.",
+                    "Er bestaat al een afhaal actie, van dit opgegeven medicijn voor deze gebruiker op de opgegeven datum.",
                 )
                 return redirect("user")
             else:
