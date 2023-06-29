@@ -1,28 +1,28 @@
 {% extends 'base/base.html' %}
 
 {% block content %}
-    <div class="container">
-        <h1>Pas aan</h1>
-        <form method="POST">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <div class="link-container">
-                <input type="submit" value="Submit" class="btn btn-primary">
-            </div>
-        </form>
+<div class="container">
+    <h1>Pas aan</h1>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <div class="link-container">
+            <input type="submit" value="Submit" class="btn btn-primary">
+        </div>
+    </form>
 
-        <form method="POST" action="{% url 'admin_delete_medicine' medicine.id %}">
-            {% csrf_token %}
-            <div class="link-container">
-                <input type="submit" value="Delete Medicine" class="btn btn-danger">
-            </div>
-        </form>
+    <form method="POST" action="{% url 'admin_delete_medicine' medicine.id %}">
+        {% csrf_token %}
+        <div class="link-container">
+            <input type="submit" value="Delete Medicine" class="btn btn-danger">
+        </div>
+    </form>
 
-        <form method="POST" action="{% url 'afhaal_medicijn' medicine.id %}">
-            {% csrf_token %}
-            <div class="link-container">
-                <input type="submit" value="+ Afhaal" class="btn btn-success">
-            </div>
-        </form>
-    </div>
+    <form method="POST" action="{% url 'afhaal_medicijn' medicine.id %}">
+        {% csrf_token %}
+        <div class="link-container">
+            <input type="submit" value="+ Afhaal" class="btn btn-success">
+        </div>
+    </form>
+</div>
 {% endblock %}

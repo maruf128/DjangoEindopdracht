@@ -282,6 +282,7 @@ h2 {
 }
 
 /* css voor messages */
+/* CSS for messages */
 .messages {
     margin: 0 auto;
     width: 400px;
@@ -290,15 +291,16 @@ h2 {
     justify-content: center;
 }
 
-messages.error {
-    background-color: red !;
-    color: white !;
+.error {
+    background-color: red !important;
+    color: white !important;
 }
 
-.messages.success {
-    background-color: rgb(29, 151, 118) !;
-    color: white !;
+.success {
+    background-color: rgb(29, 151, 118);
+    color: white;
 }
+
 
 /* Collection List styles */
 ul {
