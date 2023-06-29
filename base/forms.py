@@ -58,6 +58,14 @@ class CollectionFormMedicine(forms.ModelForm):
         user_choices = [(None, "-----")] + [(user.id, user.username) for user in users]
         self.fields["user"].widget = forms.Select(choices=user_choices)
 
+    def clean_date(self):
+        date = self.cleaned_data.get("date")
+        if date is not None and date < timezone.now().date():
+            raise forms.ValidationError(
+                "De datum moet gelijk zijn aan of later zijn dan vandaag."
+            )
+        return date
+
 
 class TotaalCollectionForm(forms.ModelForm):
     class Meta:
@@ -74,6 +82,14 @@ class TotaalCollectionForm(forms.ModelForm):
         users = User.objects.all()
         user_choices = [(None, "-----")] + [(user.id, user.username) for user in users]
         self.fields["user"].widget = forms.Select(choices=user_choices)
+
+    def clean_date(self):
+        date = self.cleaned_data.get("date")
+        if date is not None and date < timezone.now().date():
+            raise forms.ValidationError(
+                "De datum moet gelijk zijn aan of later zijn dan vandaag."
+            )
+        return date
 
 
 class MedicineForm(forms.ModelForm):
