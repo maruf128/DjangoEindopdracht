@@ -2,9 +2,9 @@
 
 {% block content %}
 {% if request.path == '/admin_alle_collections/'%}
-<h1>Alle collections</h1>
+<h1>Alle  Afhalingen</h1>
 {% else %}
-<h1>Unapproved Collections</h1>
+<h1>Afhalingen die goedgekeurd kunnen worden.</h1>
 {% endif %}
 {% if collections %}
 <div class="vertical-link-container">
@@ -13,6 +13,6 @@
   {% endfor %}
 </div>
 {% else %}
-<p>There are no unapproved collections.</p>
+<p>Er zijn geen afhalingen die goedgekeurd moeten worden.</p>
 {% endif %}
 {% endblock %}

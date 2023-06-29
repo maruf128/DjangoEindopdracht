@@ -6,9 +6,9 @@
 <form method="POST">
     {% csrf_token %}
     <input type="hidden" name="medicine" value="{{ medicine.id }}">
-    <label for="{{ form.user.id_for_label }}">User:</label>
+    <label for="{{ form.user.id_for_label }}">Patient:</label>
     {{ form.user }}
-    <label for="{{ form.date.id_for_label }}">Date:</label>
+    <label for="{{ form.date.id_for_label }}">Datum:</label>
     {{ form.date }}
     <p><span class="help-text">Vul de datum in deze format in: YYYY-MM-DD.</span></p>
     {% if form.errors.date %}
@@ -19,11 +19,11 @@
 {% else %}
 <form method="POST">
     {% csrf_token %}
-    <label for="{{ form.medicine.id_for_label }}">Medicine:</label>
+    <label for="{{ form.medicine.id_for_label }}">Medicijn:</label>
     {{ form.medicine }}
-    <label for="{{ form.user.id_for_label }}">User:</label>
+    <label for="{{ form.user.id_for_label }}">Patient:</label>
     {{ form.user }}
-    <label for="{{ form.date.id_for_label }}">Date:</label>
+    <label for="{{ form.date.id_for_label }}">Datum:</label>
     {{ form.date }}
     <p><span class="help-text">Vul de datum in deze format in: YYYY-MM-DD.</span></p>
     {% if form.errors.date %}
