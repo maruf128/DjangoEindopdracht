@@ -288,7 +288,7 @@ def nieuwe_medicijn(request):
 def collection_detail(request, collection_id):
     collection = get_object_or_404(
         Collection, id=collection_id, user=request.user.id)
-
+    medicine = Medicine.objects.get(pk=collection.medicine_id)
     if request.method == "POST":
         form = CollectionDetailForm(request.POST, instance=collection)
         if form.is_valid():
@@ -300,6 +300,7 @@ def collection_detail(request, collection_id):
     context = {
         "collection": collection,
         "form": form,
+        "medicine_name": medicine.name,
     }
     return render(request, "base/collection_detail.html", context)
 
@@ -307,7 +308,14 @@ def collection_detail(request, collection_id):
 @login_required
 def medicijn_gegevens(request, pk):
     medicine = get_object_or_404(Medicine, pk=pk)
-    context = {"medicine": medicine}
+    # krijg de ingelogde user
+    ingelogde = request.user.profile
+    user_count = Collection.objects.filter(
+        user=ingelogde, collected=True, collectedapproved=True).count()
+    admin_count = Collection.objects.filter(
+        collected=True, collectedapproved=True).count()
+    context = {"medicine": medicine,
+               "user_count": user_count, "admin_count": admin_count}
     return render(request, "base/medicijn_detail.html", context)
 
 

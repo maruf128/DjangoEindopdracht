@@ -1,16 +1,22 @@
 {% extends 'base/base.html' %}
 
 {% block content %}
-  <h1>Medicine Detail</h1>
-  <p><strong>Name: </strong>{{ medicine.name }}</p>
-  <p><strong>Manufacturer: </strong>{{ medicine.manufacturer }}</p>
-  <p><strong>Cures: </strong>{{ medicine.cures }}</p>
-  <p><strong>Side Effects: </strong>{{ medicine.sideeffects }}</p>
-  {% if user.is_staff %}
-    <div class="link-container">
-        <a class="link" href="{% url 'admin_edit_medicine' pk=medicine.pk %}" class="btn btn-primary">Aanpassen / Afhaal aanmaken</a>
-    </div>
-  {% endif%}
+<h1>Medicine Detail</h1>
+<p><strong>Name: </strong>{{ medicine.name }}</p>
+<p><strong>Manufacturer: </strong>{{ medicine.manufacturer }}</p>
+<p><strong>Cures: </strong>{{ medicine.cures }}</p>
+<p><strong>Side Effects: </strong>{{ medicine.sideeffects }}</p>
+{% if not request.user.is_staff %}
+<!-- zorg ervoor dat hier een count komt voor user aantal opgehaald -->
+<p><strong>Aantal keer opgehaald door u: </strong>{{ user_count }}</p>
+{% endif %}
+{% if user.is_staff %}
+<p><strong>Aantal keer opgehaald: </strong>{{ admin_count }}</p>
+<div class="link-container">
+  <a class="link" href="{% url 'admin_edit_medicine' pk=medicine.pk %}" class="btn btn-primary">Aanpassen / Afhaal
+    aanmaken</a>
+</div>
+{% endif%}
 
 
 
