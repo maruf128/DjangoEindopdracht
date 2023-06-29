@@ -3,15 +3,15 @@
 {% block content %}
 {% if collections %}
 {% if user.is_staff %}
-<h1>Ophalingen voor {{naam.user.username}}</h1>
+<h1>Afhalingen voor {{naam.user.username}}</h1>
 <div class="vertical-link-container">
   {% for collection in collections %}
   <a class="vertical-link" href="{% url 'admin_collection_detail' collection.id %}">{{collection.date}}</a>
   {% endfor %}
 </div>
 {% else %}
-<h1>Uw Ophalingen</h1>
-<p>Alle ophalingen niet goedgekeurd door een medewerker.</p>
+<h1>Uw Afhalingen</h1>
+<p>Alle Afhalingen niet goedgekeurd door een medewerker.</p>
 <div class="vertical-link-container">
   {% for collection in collections %}
   <a class="vertical-link" href="{% url 'collection_detail' collection.id %}">{{collection.date}}</a>
