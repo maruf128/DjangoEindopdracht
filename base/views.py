@@ -57,8 +57,7 @@ def password_check(request):
         form = PasswordCheckForm(request.POST)
         if form.is_valid():
             password = form.cleaned_data.get("password")
-            user = authenticate(
-                username=request.user.username, password=password)
+            user = authenticate(username=request.user.username, password=password)
             if user is not None and user == request.user:
                 return redirect("edit_user", pk=request.user.pk)
             else:
@@ -100,8 +99,7 @@ def collection_list(request):
 
 @staff_member_required
 def admin_collection_list(request):
-    collections = Collection.objects.filter(
-        collectedapproved=False, collected=True)
+    collections = Collection.objects.filter(collectedapproved=False, collected=True)
 
     context = {"collections": collections}
     return render(request, "base/admin_collection_list.html", context)
@@ -292,8 +290,7 @@ def nieuwe_medicijn(request):
 
 @login_required
 def collection_detail(request, collection_id):
-    collection = get_object_or_404(
-        Collection, id=collection_id, user=request.user.id)
+    collection = get_object_or_404(Collection, id=collection_id, user=request.user.id)
     medicine = Medicine.objects.get(pk=collection.medicine_id)
     if request.method == "POST":
         form = CollectionDetailForm(request.POST, instance=collection)
@@ -351,8 +348,7 @@ def admin_collection_detail(request, pk):
             user = form.cleaned_data.get("user")
             date = form.cleaned_data.get("date")
             existing_collection = (
-                Collection.objects.filter(
-                    user=user, date=date, medicine=medicine)
+                Collection.objects.filter(user=user, date=date, medicine=medicine)
                 .exclude(pk=pk)
                 .exists()
             )
