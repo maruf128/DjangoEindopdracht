@@ -311,9 +311,9 @@ def medicijn_gegevens(request, pk):
     # krijg de ingelogde user
     ingelogde = request.user.profile
     user_count = Collection.objects.filter(
-        user=ingelogde, collected=True, collectedapproved=True).count()
+        user=ingelogde, collected=True, collectedapproved=True, medicine=medicine.id).count()
     admin_count = Collection.objects.filter(
-        collected=True, collectedapproved=True).count()
+        collected=True, collectedapproved=True, medicine=medicine.id).count()
     context = {"medicine": medicine,
                "user_count": user_count, "admin_count": admin_count}
     return render(request, "base/medicijn_detail.html", context)
