@@ -57,8 +57,7 @@ def password_check(request):
         form = PasswordCheckForm(request.POST)
         if form.is_valid():
             password = form.cleaned_data.get("password")
-            user = authenticate(
-                username=request.user.username, password=password)
+            user = authenticate(username=request.user.username, password=password)
             if user is not None and user == request.user:
                 return redirect("edit_user", pk=request.user.pk)
             else:
@@ -91,7 +90,8 @@ def edit_user(request, pk):
 @login_required
 def collection_list(request):
     collections = Collection.objects.filter(
-        user=request.user.id, collectedapproved=False)
+        user=request.user.id, collectedapproved=False
+    )
 
     context = {"collections": collections}
     return render(request, "base/collection_list.html", context)
@@ -99,7 +99,7 @@ def collection_list(request):
 
 @staff_member_required
 def admin_collection_list(request):
-    collections = Collection.objects.filter(collectedapproved=False)
+    collections = Collection.objects.filter(collectedapproved=False, collected=True)
 
     context = {"collections": collections}
     return render(request, "base/admin_collection_list.html", context)
@@ -286,8 +286,7 @@ def nieuwe_medicijn(request):
 
 @login_required
 def collection_detail(request, collection_id):
-    collection = get_object_or_404(
-        Collection, id=collection_id, user=request.user.id)
+    collection = get_object_or_404(Collection, id=collection_id, user=request.user.id)
     medicine = Medicine.objects.get(pk=collection.medicine_id)
     if request.method == "POST":
         form = CollectionDetailForm(request.POST, instance=collection)
@@ -311,11 +310,16 @@ def medicijn_gegevens(request, pk):
     # krijg de ingelogde user
     ingelogde = request.user.profile
     user_count = Collection.objects.filter(
-        user=ingelogde, collected=True, collectedapproved=True, medicine=medicine.id).count()
+        user=ingelogde, collected=True, collectedapproved=True, medicine=medicine.id
+    ).count()
     admin_count = Collection.objects.filter(
-        collected=True, collectedapproved=True, medicine=medicine.id).count()
-    context = {"medicine": medicine,
-               "user_count": user_count, "admin_count": admin_count}
+        collected=True, collectedapproved=True, medicine=medicine.id
+    ).count()
+    context = {
+        "medicine": medicine,
+        "user_count": user_count,
+        "admin_count": admin_count,
+    }
     return render(request, "base/medicijn_detail.html", context)
 
 
@@ -341,11 +345,15 @@ def admin_collection_detail(request, pk):
             # Check if there is already a collection for the same user, date, and medicine
             user = form.cleaned_data.get("user")
             date = form.cleaned_data.get("date")
-            existing_collection = Collection.objects.filter(
-                user=user, date=date, medicine=medicine).exclude(pk=pk).exists()
+            existing_collection = (
+                Collection.objects.filter(user=user, date=date, medicine=medicine)
+                .exclude(pk=pk)
+                .exists()
+            )
             if existing_collection:
                 messages.error(
-                    request, "Er bestaat al een afhaal actie voor de gebruiker op de opgegeven datum en medicijn."
+                    request,
+                    "Er bestaat al een afhaal actie voor de gebruiker op de opgegeven datum en medicijn.",
                 )
             else:
                 form.save()
