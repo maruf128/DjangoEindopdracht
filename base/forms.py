@@ -10,6 +10,12 @@ class ProfileForm(UserChangeForm):
     class Meta:
         model = Profile
         fields = ["bio", "city", "date_of_birth", "password"]
+        labels = {
+            "bio": "Bio",
+            "city": "Stad",
+            "date_of_birth": "Geboortedatum",
+            "password": "Wachtwoord",
+        }
 
     def save(self, commit=True):
         profile = super().save(commit=False)
@@ -26,6 +32,7 @@ class CollectionForm(forms.ModelForm):
     class Meta:
         model = Collection
         fields = ["medicine", "user", "date"]
+        labels = {"medicine": "Medicijn", "user": "Patient", "date": "Datum"}
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -51,6 +58,7 @@ class CollectionFormMedicine(forms.ModelForm):
     class Meta:
         model = Collection
         fields = ["user", "date"]
+        labels = {"user": "Patient", "date": "Datum"}
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -70,7 +78,22 @@ class CollectionFormMedicine(forms.ModelForm):
 class TotaalCollectionForm(forms.ModelForm):
     class Meta:
         model = Collection
-        fields = "__all__"
+        fields = [
+            "medicine",
+            "user",
+            "date",
+            "collected",
+            "collectedapproved",
+            "collectedapprovedby",
+        ]
+        labels = {
+            "medicine": "Medicijn",
+            "user": "Patient",
+            "date": "Datum",
+            "collected": "Afgehaald",
+            "collectedapproved": "Afhaling controle",
+            "collectedapprovedby": "Afhaling controle door",
+        }
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -96,24 +119,38 @@ class MedicineForm(forms.ModelForm):
     class Meta:
         model = Medicine
         fields = ["name", "manufacturer", "cures", "sideeffects"]
+        labels = {
+            "name": "Naam",
+            "manufacturer": "Fabrikant",
+            "cures": "Genezingen",
+            "sideeffects": "Bijwerkingen",
+        }
 
 
 class MedicineEditForm(forms.ModelForm):
     class Meta:
         model = Medicine
         fields = ["name", "manufacturer", "cures", "sideeffects"]
+        labels = {
+            "name": "Naam",
+            "manufacturer": "Fabrikant",
+            "cures": "Genezingen",
+            "sideeffects": "Bijwerkingen",
+        }
 
 
 class CollectionDetailForm(forms.ModelForm):
     class Meta:
         model = Collection
         fields = ["collected"]
+        labels = {"collected": "Afhaling"}
 
 
 class AdminApproveForm(forms.ModelForm):
     class Meta:
         model = Collection
         fields = ["collectedapproved"]
+        labels = {"collectedapproved": "Afhaling controle"}
 
 
 class PasswordCheckForm(forms.Form):

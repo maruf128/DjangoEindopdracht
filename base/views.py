@@ -57,8 +57,7 @@ def password_check(request):
         form = PasswordCheckForm(request.POST)
         if form.is_valid():
             password = form.cleaned_data.get("password")
-            user = authenticate(
-                username=request.user.username, password=password)
+            user = authenticate(username=request.user.username, password=password)
             if user is not None and user == request.user:
                 return redirect("edit_user", pk=request.user.pk)
             else:
@@ -100,8 +99,7 @@ def collection_list(request):
 
 @staff_member_required
 def admin_collection_list(request):
-    collections = Collection.objects.filter(
-        collectedapproved=False, collected=True)
+    collections = Collection.objects.filter(collectedapproved=False, collected=True)
 
     context = {"collections": collections}
     return render(request, "base/admin_collection_list.html", context)
@@ -148,11 +146,9 @@ def admin_approve(request, collection_id):
             collection = form.save(commit=False)
             collection.collectedapprovedby = request.user
             collection.save()
-            # Handle form submission success
     else:
         form = AdminApproveForm(instance=collection)
 
-    # Retrieve the user associated with the collection
     user_id = collection.user_id
     user = User.objects.get(id=user_id)
 
@@ -247,15 +243,13 @@ def nieuwe_afhaal(request):
 
 @staff_member_required
 def afhaal_medicijn(request, pk):
-    # Get the medicine object based on the ID
     medicine = get_object_or_404(Medicine, id=pk)
 
     if request.method == "POST":
         form = CollectionFormMedicine(request.POST)
         if form.is_valid():
             collection = form.save(commit=False)
-            collection.medicine = medicine  # Set the medicine manually
-            # Check if a collection already exists for the user and date
+            collection.medicine = medicine
             existing_collection = Collection.objects.filter(
                 user=collection.user, date=collection.date, medicine=medicine
             ).exists()
@@ -296,14 +290,12 @@ def nieuwe_medicijn(request):
 
 @login_required
 def collection_detail(request, collection_id):
-    collection = get_object_or_404(
-        Collection, id=collection_id, user=request.user.id)
+    collection = get_object_or_404(Collection, id=collection_id, user=request.user.id)
     medicine = Medicine.objects.get(pk=collection.medicine_id)
     if request.method == "POST":
         form = CollectionDetailForm(request.POST, instance=collection)
         if form.is_valid():
             form.save()
-            # Handle form submission success
     else:
         form = CollectionDetailForm(instance=collection)
 
@@ -353,12 +345,10 @@ def admin_collection_detail(request, pk):
     if request.method == "POST":
         form = TotaalCollectionForm(request.POST, instance=collection)
         if form.is_valid():
-            # Check if there is already a collection for the same user, date, and medicine
             user = form.cleaned_data.get("user")
             date = form.cleaned_data.get("date")
             existing_collection = (
-                Collection.objects.filter(
-                    user=user, date=date, medicine=medicine)
+                Collection.objects.filter(user=user, date=date, medicine=medicine)
                 .exclude(pk=pk)
                 .exists()
             )

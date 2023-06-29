@@ -1,12 +1,12 @@
 {% extends 'base/base.html' %}
 
 {% block content %}
-<h1>Collection Details</h1>
-<p><strong>Medicine:</strong> {{ medicine.name }}</p>
-<p><strong>User:</strong> {{ user.username }}</p>
-<p><strong>Date:</strong> {{ collection.date }}</p>
+<h1>Afhaling Details</h1>
+<p><strong>Medicijn:</strong> {{ medicine.name }}</p>
+<p><strong>Patient:</strong> {{ user.username }}</p>
+<p><strong>Datum:</strong> {{ collection.date }}</p>
 <!-- Display other collection details as desired -->
-<h2>Admin Collection Detail</h2>
+<h2>Admin Afhaal Detail</h2>
 <form method="POST">
     {% csrf_token %}
     {{ form.as_p }}
