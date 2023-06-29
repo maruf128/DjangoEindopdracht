@@ -3,7 +3,8 @@
 {% block content %}
 <h1>Afhaal opties</h1>
 <div class="link-container">
-    <a class="link" href="{% url 'admin_collection_list' %}">Goedkeuren / Verwijderen</a>
-    <a class="link" href="{% url 'nieuwe_afhaal'%}">+ Afhaal</a>
-  </div>
+  <a class="link" href="{% url 'admin_collection_list' %}">Goedkeuren / Verwijderen</a>
+  <a class="link" href="{% url 'nieuwe_afhaal'%}">+ Afhaal</a>
+  <a class="link" href="{% url 'admin_alle_collections'%}">Alle afhaal actie's</a>
+</div>
 {% endblock content %}

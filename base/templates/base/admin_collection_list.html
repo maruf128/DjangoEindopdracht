@@ -1,14 +1,18 @@
 {% extends 'base/base.html' %}
 
 {% block content %}
-  <h1>Unapproved Collections</h1>
-  {% if collections %}
-    <div class="vertical-link-container">
-      {% for collection in collections %}
-        <a class="vertical-link" href="{% url 'admin_approve' collection.id %}">{{collection.date}}</a>
-      {% endfor %}
-    </div>
-  {% else %}
-    <p>There are no unapproved collections.</p>
-  {% endif %}
+{% if request.path == '/admin_alle_collections/'%}
+<h1>Alle collections</h1>
+{% else %}
+<h1>Unapproved Collections</h1>
+{% endif %}
+{% if collections %}
+<div class="vertical-link-container">
+  {% for collection in collections %}
+  <a class="vertical-link" href="{% url 'admin_approve' collection.id %}">{{collection.date}}</a>
+  {% endfor %}
+</div>
+{% else %}
+<p>There are no unapproved collections.</p>
+{% endif %}
 {% endblock %}

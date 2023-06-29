@@ -73,6 +73,11 @@ urlpatterns = [
         views.admin_collection_detail,
         name="admin_collection_detail",
     ),
+    path(
+        "admin_alle_collections/",
+        views.admin_alle_collections,
+        name="admin_alle_collections",
+    )
     # path(
     #     "collections/<int:collection_id>/mark_delivered/",
     #     views.mark_delivered,
